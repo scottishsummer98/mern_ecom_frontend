@@ -52,7 +52,7 @@ const DashBoard = (props) => {
             })
           ) : (
             <tr>
-              <td colSpan={2}>No available purchase history!</td>
+              <td colSpan={3}>No available purchase history!</td>
             </tr>
           ));
   }

@@ -9,9 +9,9 @@ export const auth = (user) => (dispatch) => {
   dispatch(authLoading(true));
   let authURL = null;
   if (user.mode === "Register") {
-    authURL = `${API}/user/registration`;
+    authURL = `${API}/auth/registration`;
   } else {
-    authURL = `${API}/user/login`;
+    authURL = `${API}/auth/login`;
   }
   axios
     .post(`${authURL}`, user.values, {
@@ -21,12 +21,7 @@ export const auth = (user) => (dispatch) => {
     })
     .then((res) => {
       dispatch(authLoading(false));
-      dispatch(authSuccess(res.data.token));
-      Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: res.data.message,
-      });
+      dispatch(authSuccess(res.data.token, res.data.message));
     })
     .catch((err) => {
       dispatch(authLoading(false));
@@ -37,10 +32,17 @@ export const auth = (user) => (dispatch) => {
       });
     });
 };
-export const authSuccess = (token) => {
+export const authSuccess = (token, message) => {
   localStorage.setItem("jwt", JSON.stringify(token));
   const jwt = JSON.parse(localStorage.getItem("jwt"));
   const decoded = jwt_decode(jwt);
+  if (message) {
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: message,
+    });
+  }
   return {
     type: actionTypes.AUTH_SUCCESS,
     payload: {
@@ -61,7 +63,7 @@ export const authCheck = () => (dispatch) => {
   } else {
     const { exp } = jwt_decode(tokenExists);
     if (new Date().getTime() < exp * 1000) {
-      dispatch(authSuccess(tokenExists));
+      dispatch(authSuccess(tokenExists, null));
     } else {
       dispatch(logout());
     }

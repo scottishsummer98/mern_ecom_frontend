@@ -67,45 +67,52 @@ const AdminProduct = (props) => {
   }
   let sl = 1;
   let productList = null;
-  if (props.products.isLoading) {
-    productList = <Spinner />;
-  } else {
-    productList = props.products.products.map((product) => {
-      return (
-        <tr key={product._id}>
-          <td>{sl++}</td>
-          <td>{product.name}</td>
-          <td>
-            <img
-              style={{ width: "5rem", height: "5rem" }}
-              src={API + "/product/photo/" + product._id}
-              alt="ProductImage"
-            />
-          </td>
-          <td>{product.description}</td>
-          <td>{product.price}</td>
-          <td>{product.category.name}</td>
-          <td>{product.quantity}</td>
-          <td>{product.sold}</td>
-          <td>
-            <button
-              className="btn btn-dark"
-              onClick={() => handleEditProduct(product)}
-            >
-              <FiEdit />
-            </button>
-            <br />
-            <br />
-            <button
-              className="btn btn-dark"
-              onClick={() => props.deleteProduct(product._id)}
-            >
-              <FiTrash />
-            </button>
-          </td>
-        </tr>
-      );
-    });
+  {
+    props.products.isLoading
+      ? (productList = <Spinner />)
+      : (productList =
+          props.products.products.length > 0 ? (
+            props.products.products.map((product) => {
+              return (
+                <tr key={product._id}>
+                  <td>{sl++}</td>
+                  <td>{product.name}</td>
+                  <td>
+                    <img
+                      style={{ width: "5rem", height: "5rem" }}
+                      src={API + "/product/photo/" + product._id}
+                      alt="ProductImage"
+                    />
+                  </td>
+                  <td>{product.description}</td>
+                  <td>{product.price}</td>
+                  <td>{product.category.name}</td>
+                  <td>{product.quantity}</td>
+                  <td>{product.sold}</td>
+                  <td>
+                    <button
+                      className="btn btn-dark"
+                      onClick={() => handleEditProduct(product)}
+                    >
+                      <FiEdit />
+                    </button>
+                    <br />
+                    <br />
+                    <button
+                      className="btn btn-dark"
+                      onClick={() => props.deleteProduct(product._id)}
+                    >
+                      <FiTrash />
+                    </button>
+                  </td>
+                </tr>
+              );
+            })
+          ) : (
+            <tr>
+              <td colSpan={9}>No available products!</td>
+            </tr>
+          ));
   }
   return (
     <div className="admin_product_container">

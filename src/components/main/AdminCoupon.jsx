@@ -52,35 +52,44 @@ const AdminCoupon = (props) => {
   }
   let sl = 1;
   let couponList = null;
-  if (props.coupons.isLoading) {
-    couponList = <Spinner />;
-  } else {
-    couponList = props.coupons.coupons.map((coupon) => {
-      return (
-        <tr key={coupon._id}>
-          <td>{sl++}</td>
-          <td>{coupon.code}</td>
-          <td>{coupon.amount}</td>
-          <td>{coupon.limit}</td>
-          <td>{dateFormat(coupon.expirationDate, "dd/mm/yyyy, h:MM TT")}</td>
-          <td>
-            <button
-              className="btn btn-dark"
-              onClick={() => handleEditCoupon(coupon)}
-            >
-              <FiEdit />
-            </button>
-            &nbsp;
-            <button
-              className="btn btn-dark"
-              onClick={() => props.deleteCoupon(coupon._id)}
-            >
-              <FiTrash />
-            </button>
-          </td>
-        </tr>
-      );
-    });
+  {
+    props.coupons.isLoading
+      ? (couponList = <Spinner />)
+      : (couponList =
+          props.coupons.coupons.length > 0 ? (
+            props.coupons.coupons.map((coupon) => {
+              return (
+                <tr key={coupon._id}>
+                  <td>{sl++}</td>
+                  <td>{coupon.code}</td>
+                  <td>{coupon.amount}</td>
+                  <td>{coupon.limit}</td>
+                  <td>
+                    {dateFormat(coupon.expirationDate, "dd/mm/yyyy, h:MM TT")}
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-dark"
+                      onClick={() => handleEditCoupon(coupon)}
+                    >
+                      <FiEdit />
+                    </button>
+                    &nbsp;
+                    <button
+                      className="btn btn-dark"
+                      onClick={() => props.deleteCoupon(coupon._id)}
+                    >
+                      <FiTrash />
+                    </button>
+                  </td>
+                </tr>
+              );
+            })
+          ) : (
+            <tr>
+              <td colSpan={6}>No available coupons!</td>
+            </tr>
+          ));
   }
   return (
     <div className="admin_category_container">

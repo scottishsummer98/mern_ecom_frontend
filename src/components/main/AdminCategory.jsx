@@ -51,32 +51,39 @@ const AdminCategory = (props) => {
   }
   let sl = 1;
   let categoryList = null;
-  if (props.categories.isLoading) {
-    categoryList = <Spinner />;
-  } else {
-    categoryList = props.categories.categories.map((category) => {
-      return (
-        <tr key={category._id}>
-          <td>{sl++}</td>
-          <td>{category.name}</td>
-          <td>
-            <button
-              className="btn btn-dark"
-              onClick={() => handleEditCategory(category)}
-            >
-              <FiEdit />
-            </button>
-            &nbsp;
-            <button
-              className="btn btn-dark"
-              onClick={() => props.deleteCategory(category._id)}
-            >
-              <FiTrash />
-            </button>
-          </td>
-        </tr>
-      );
-    });
+  {
+    props.categories.isLoading
+      ? (categoryList = <Spinner />)
+      : (categoryList =
+          props.categories.categories.length > 0 ? (
+            props.categories.categories.map((category) => {
+              return (
+                <tr key={category._id}>
+                  <td>{sl++}</td>
+                  <td>{category.name}</td>
+                  <td>
+                    <button
+                      className="btn btn-dark"
+                      onClick={() => handleEditCategory(category)}
+                    >
+                      <FiEdit />
+                    </button>
+                    &nbsp;
+                    <button
+                      className="btn btn-dark"
+                      onClick={() => props.deleteCategory(category._id)}
+                    >
+                      <FiTrash />
+                    </button>
+                  </td>
+                </tr>
+              );
+            })
+          ) : (
+            <tr>
+              <td colSpan={3}>No available categories!</td>
+            </tr>
+          ));
   }
   return (
     <div className="admin_category_container">
