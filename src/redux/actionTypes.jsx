@@ -1,0 +1,30 @@
+export const AUTH_SUCCESS = "AUTH_SUCCESS";
+export const AUTH_LOADING = "AUTH_LOADING";
+export const AUTH_LOGOUT = "AUTH_LOGOUT";
+
+export const CATEGORY_LOADING = "CATEGORY_LOADING";
+export const LOAD_CATEGORY = "LOAD_CATEGORY";
+export const ADD_CATEGORY = "ADD_CATEGORY";
+
+export const PRODUCT_LOADING = "PRODUCT_LOADING";
+export const LOAD_PRODUCT = "LOAD_PRODUCT";
+export const ADD_PRODUCT = "ADD_PRODUCT";
+export const ADD_REVIEW = "ADD_REVIEW";
+
+export const COUPON_LOADING = "COUPON_LOADING";
+export const LOAD_COUPON = "LOAD_COUPON";
+export const ADD_COUPON = "ADD_COUPON";
+export const CLEAR_COUPON = "CLEAR_COUPON";
+
+export const CART_LOADING = "CART_LOADING";
+export const LOAD_CART = "LOAD_CART";
+export const ADD_CART = "ADD_CART";
+
+export const ORDER_LOADING = "ORDER_LOADING";
+export const LOAD_ORDER = "LOAD_ORDER";
+
+export const USER_DETAILS_LOADING = "USER_DETAILS_LOADING";
+export const LOAD_USER_DETAILS = "LOAD_USER_DETAILS";
+export const ADD_USER_DETAILS = "ADD_USER_DETAILS";
+
+export const SET_GATEWAY_URL = "SET_GATEWAY_URL";
