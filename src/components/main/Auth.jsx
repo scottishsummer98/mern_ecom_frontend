@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Formik } from "formik";
-import { auth, authSuccess } from "../../redux/actionCreators";
+import { auth, authGoogle } from "../../redux/actionCreators";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../sub/Spinner";
@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     auth: (user) => dispatch(auth(user)),
-    authSuccess: (token, message) => dispatch(authSuccess(token, message)),
+    authGoogle: () => dispatch(authGoogle()),
   };
 };
 
@@ -26,24 +26,6 @@ function Auth(props) {
       navigate("/");
     }
   }, [props.authentication.userInfo, navigate]);
-  const handleGoogleButtonClick = async () => {
-    try {
-      const response = await fetch(
-        "https://mern-ecom-backend-5xg2.onrender.com/auth/google",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = await response.json();
-      const { token, message } = data;
-      props.authSuccess(token, message);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   const switchModeHandler = () => {
     if (mode === "Register") {
       setMode("Login");
@@ -171,7 +153,7 @@ function Auth(props) {
               width: "50%",
               marginTop: ".5rem",
             }}
-            onClick={handleGoogleButtonClick}
+            onClick={props.authGoogle}
           >
             <span className="fa fa-google"></span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Google

@@ -75,6 +75,29 @@ export const logout = () => {
     type: actionTypes.AUTH_LOGOUT,
   };
 };
+// Authentication Google
+export const authGoogle = () => (dispatch) => {
+  dispatch(authLoading(true));
+  axios
+    .get(`${API}/auth/google`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      dispatch(authLoading(false));
+      dispatch(authSuccess(res.token, res.message));
+    })
+    .catch((err) => {
+      dispatch(authLoading(false));
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: err,
+      });
+    });
+};
 
 //Category
 const categoryLoading = () => ({
