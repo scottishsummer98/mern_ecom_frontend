@@ -83,6 +83,7 @@ export const authGoogle = () => (dispatch) => {
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,
     })
     .then((res) => {
       console.log(res);
