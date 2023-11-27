@@ -78,25 +78,12 @@ export const logout = () => {
 // Authentication Google
 export const authGoogle = () => (dispatch) => {
   dispatch(authLoading(true));
-  axios
-    .get(`${API}/auth/google`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res) => {
-      console.log(res);
-      dispatch(authLoading(false));
-      dispatch(authSuccess(res.token, res.message));
-    })
-    .catch((err) => {
-      dispatch(authLoading(false));
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: err,
-      });
-    });
+  window.location.href = `${API}/auth/google`;
+};
+// Authentication Facebook
+export const authFacebook = () => (dispatch) => {
+  dispatch(authLoading(true));
+  window.location.href = `${API}/auth/facebook`;
 };
 
 //Category

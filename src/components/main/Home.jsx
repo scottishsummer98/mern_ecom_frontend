@@ -108,7 +108,6 @@ const Home = (props) => {
 
   const handleFilters = (myFilters, filterBy) => {
     const newFilters = { ...filters };
-    console.log(newFilters);
     if (filterBy === "category") {
       newFilters[filterBy] = myFilters;
     } else if (filterBy === "price") {

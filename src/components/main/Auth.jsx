@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Formik } from "formik";
-import { auth, authGoogle } from "../../redux/actionCreators";
+import {
+  auth,
+  authSuccess,
+  authGoogle,
+  authFacebook,
+} from "../../redux/actionCreators";
 import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Spinner from "../sub/Spinner";
 
 const mapStateToProps = (state) => {
@@ -15,12 +20,23 @@ const mapDispatchToProps = (dispatch) => {
   return {
     auth: (user) => dispatch(auth(user)),
     authGoogle: () => dispatch(authGoogle()),
+    authFacebook: () => dispatch(authFacebook()),
+    authSuccess: (token, message) => dispatch(authSuccess(token, message)),
   };
 };
 
 function Auth(props) {
   const [mode, setMode] = useState("Login");
   const navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const token = urlParams.get("token");
+    const message = urlParams.get("message");
+    if (token) {
+      props.authSuccess(token, message);
+    }
+  }, [location.search]);
   useEffect(() => {
     if (props.authentication.userInfo) {
       navigate("/");
@@ -164,6 +180,7 @@ function Auth(props) {
               width: "50%",
               marginTop: ".5rem",
             }}
+            onClick={props.authFacebook}
           >
             <span className="fa fa-facebook"></span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Facebook
