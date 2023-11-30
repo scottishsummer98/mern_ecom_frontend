@@ -30,12 +30,9 @@ function Auth(props) {
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
-    console.log("useEffect for URL change is called");
     const urlParams = new URLSearchParams(location.search);
     const token = urlParams.get("token");
     const message = urlParams.get("message");
-    console.log("Token:", token);
-    console.log("Message:", message);
     if (token) {
       props.authSuccess(token, message);
     }
