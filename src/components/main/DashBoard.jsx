@@ -95,6 +95,7 @@ const DashBoard = (props) => {
               <tr>
                 <th>Transaction Id</th>
                 <th>Ordered At</th>
+                <th>SSL Order Validity</th>
               </tr>
             </thead>
             <tbody>{purchaseHistory}</tbody>
