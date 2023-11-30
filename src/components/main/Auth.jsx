@@ -9,6 +9,7 @@ import {
 import { connect } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import Spinner from "../sub/Spinner";
+import Swal from "sweetalert2";
 
 const mapStateToProps = (state) => {
   return {
@@ -34,7 +35,16 @@ function Auth(props) {
     const token = urlParams.get("token");
     const message = urlParams.get("message");
     if (token) {
-      props.authSuccess(token, message);
+      if (token != "undefined") {
+        props.authSuccess(token, message);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "error",
+          text: message,
+        });
+        navigate("/auth");
+      }
     }
   }, [location.search]);
   useEffect(() => {
